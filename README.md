@@ -10,6 +10,10 @@ installation still needs checking on a currently supported macOS version.
 These checks do not qualify model inference. This preview is built from a
 tested pull request, not a public release of the final reviewed `main` branch.
 
+[Recorded checks](docs/validation.md) include the actual private Linux install
+and the Ubuntu/macOS helper tests. The next native check is installation on an
+invited Mac.
+
 ## Install
 
 You need Homebrew, Git, Python 3.11 or later, and the GitHub CLI (`gh`). Your
