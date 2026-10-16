@@ -1,4 +1,25 @@
-# Private preview checks — 14 October 2026
+# Private preview checks
+
+## Revision 1 — 16 October 2026
+
+This refresh pins the artifacts from
+[native run 38807128022](https://github.com/moonlysoftware/deepkit-code/actions/runs/38807128022),
+which passed build, package, install, formula test, uninstall and reinstall on
+macOS ARM and the GNU Linux diagnostic. The build commit `df73b574` and merged
+main `b4e7b289` have the same Git tree. Full source CI passed on PR #4's head:
+1,416 tests passed and 17 were ignored in each Rust run.
+
+Both downloaded archives passed the private helper's archive, binary, build
+provenance and license verification. All 25 offline helper tests, formula syntax
+and manifest/formula consistency checks passed. The manifest records the new
+archive hashes and expiration dates; the formula uses revision 1 so the earlier
+preview remains a distinct Homebrew package.
+
+The exact private revision-0-to-1 upgrade remains untested. The native source
+workflow's install/reinstall tests are not evidence of that upgrade or of model
+inference. Local validation did not rebuild DKC or replace an installed package.
+
+## Original preview — 14 October 2026
 
 Implementation tested: `d9d53b63c1d91f623d59e79cce9b4964eb0ae210`.
 

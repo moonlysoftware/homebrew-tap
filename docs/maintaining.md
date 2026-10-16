@@ -8,27 +8,36 @@ commits.
 ## What is pinned
 
 [`preview.json`](../preview.json) is the record of the accepted artifact
-identities. The current version is `0.1.0-beta.1`, from
-[Actions run 38604704711](https://github.com/moonlysoftware/deepkit-code/actions/runs/38604704711):
+identities. The upstream version is `0.1.0-beta.1`, with Homebrew revision 1
+(`0.1.0-beta.1_1`), from
+[Actions run 38807128022](https://github.com/moonlysoftware/deepkit-code/actions/runs/38807128022):
 
-- PR source head: `ae9f1bea535c1a92985344fb77ffa47d7776ca57`.
-- Artifact build commit: `41efee5b879fb2353a5407516aa90a957fba78ee`.
-- Source BLAKE3: `274521317280f0fa3bdcb7d6f7016d62684fbbf1a1527eb205befde4cf2106be`.
+- PR source head: `156a0eccc328c871bfedceafec8e25444ff38439`.
+- Artifact build commit: `df73b574bf26fb7befd01a1b1881810b32255d35`.
+- Merged main commit: `b4e7b289f0f94673987bd17d638bcc743071d099`.
+- Both commits have Git tree `7ebf819c0818e3fb829c990f662f6c80862c1c9b`.
+- Source BLAKE3: `f0f9d5afe4df53ead9f9a71c3481519098aa393b3a4e03b3cd3fe840da65a37e`.
 
 | Target | Actions artifact ID | Download expiration (UTC) |
 | --- | --- | --- |
-| Apple Silicon, `aarch64-apple-darwin` | `11915870390` | 13 November 2026, 17:25:32 |
-| GNU Linux diagnostic, `x86_64-unknown-linux-gnu` | `11915354712` | 13 November 2026, 17:28:33 |
+| Apple Silicon, `aarch64-apple-darwin` | `12007981747` | 14 November 2026, 21:24:29 |
+| GNU Linux diagnostic, `x86_64-unknown-linux-gnu` | `12008217369` | 14 November 2026, 21:32:50 |
 
 The manifest also pins archive names, sizes and SHA-256 values, binary hashes
 and license identities. Preserve that connection to the tested artifacts.
 Do not substitute a newer run, a similarly named artifact or a different binary
-under the existing version.
+under an unchanged Homebrew package version and revision. A private refresh at
+the same upstream version must increment `brew_revision` in the manifest and
+`revision` in the formula together, following
+[Homebrew's revision mechanism](https://docs.brew.sh/Formula-Cookbook#formulae-revisions).
+The manifest's `version` continues to match the binary's embedded version;
+never relabel the artifact's actual build commit or version.
 
-These are previously tested PR artifacts. They are not a rebuild of the final
-reviewed `main` branch. The Mac Homebrew checks used macOS 14, which carries an
-older-platform qualification warning; test the private tap on a currently
-supported macOS version before making a broader Mac installation claim.
+These are tested PR artifacts with the same source tree as merged main. They
+are not relabeled as a rebuild at the merge commit. The Mac Homebrew checks used
+macOS 14, which carries an older-platform qualification warning; test the private
+tap on a currently supported macOS version before making a broader Mac
+installation claim.
 Linux GNU remains diagnostic. Neither platform's installation checks establish
 model-inference performance, and this tap offers no Intel Mac or Windows build.
 

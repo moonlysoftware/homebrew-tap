@@ -2,13 +2,18 @@
 
 This private tap lets invited testers install **Deepkit Code (`dkc`)**, a tool
 that indexes a repository and searches its code, documents and Git history.
-The current preview is `0.1.0-beta.1`.
+The current Homebrew preview is `0.1.0-beta.1_1` (revision 1). It includes
+project Codex setup and the concurrent-client startup fix from
+[Deepkit Code PR #4](https://github.com/moonlysoftware/deepkit-code/pull/4).
+The binary still reports upstream version `0.1.0-beta.1`; Homebrew's revision
+and the pinned build commit distinguish this package from the earlier preview.
 
 It provides an Apple Silicon Mac build and an x86-64 GNU Linux build for
 diagnostic testing. The Mac artifact passed native Homebrew checks on macOS 14;
 installation still needs checking on a currently supported macOS version.
 These checks do not qualify model inference. This preview is built from a
-tested pull request, not a public release of the final reviewed `main` branch.
+tested pull request whose source tree exactly matches merged `main`; it remains
+a private preview rather than a public release.
 
 [Recorded checks](docs/validation.md) include the actual private Linux install
 and the Ubuntu/macOS helper tests. The next native check is installation on an
@@ -33,7 +38,7 @@ dkc --version
 The preparation step downloads the exact pinned Actions artifact, verifies its
 archive, build identity, binary and license files, then places it in Homebrew's
 cache. The formula installs from that local file; it contains no credentials.
-The pinned Actions artifacts expire on **13 November 2026**. This is temporary
+The pinned Actions artifacts expire on **14 November 2026**. This is temporary
 private distribution, with no public release date promised.
 
 If you already downloaded the exact archive through authenticated GitHub access:
@@ -45,7 +50,22 @@ python3 "$(brew --repository moonlysoftware/tap)/scripts/prepare-private.py" \
 
 Use the corresponding Linux archive on Linux. The same verification applies.
 
-## Reinstall or remove
+## Update, reinstall or remove
+
+To update an installed earlier preview, fetch the new tap and prepare its archive
+before asking Homebrew to upgrade:
+
+```sh
+brew update
+python3 "$(brew --repository moonlysoftware/tap)/scripts/prepare-private.py"
+brew upgrade --formula moonlysoftware/tap/dkc
+brew test moonlysoftware/tap/dkc
+```
+
+Then run `dkc init --codex` inside each project to create its stdio configuration.
+If Codex already has a global `deepkit-code` HTTP entry, follow the
+[configuration migration instructions](https://github.com/moonlysoftware/deepkit-code/blob/main/docs/usage.md#connect-an-mcp-client)
+before using the project entry.
 
 Run the preparation step again if Homebrew's cache has been cleared, then:
 
@@ -60,7 +80,8 @@ To remove the installed program:
 brew uninstall moonlysoftware/tap/dkc
 ```
 
-A future upgrade needs a separately qualified version. This preview does not
-establish that an upgrade between versions works. See
+Both pinned archives passed native install and reinstall checks. The exact
+revision-0-to-1 upgrade has not been exercised; those install checks are not an
+upgrade result. See
 [maintaining the tap](docs/maintaining.md) for artifact identities, checks and
 the route to a public formula.

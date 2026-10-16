@@ -2,19 +2,19 @@
   "schema": 1,
   "version": "0.1.0-beta.1",
   "repository": "moonlysoftware/deepkit-code",
-  "run_id": 38604704711,
-  "source_head": "ae9f1bea535c1a92985344fb77ffa47d7776ca57",
-  "build_commit": "41efee5b879fb2353a5407516aa90a957fba78ee",
-  "source_blake3": "274521317280f0fa3bdcb7d6f7016d62684fbbf1a1527eb205befde4cf2106be",
-  "scope": "Private preview of previously qualified PR artifacts; rebuild reviewed main before public release. Linux GNU is diagnostic only. No model-inference qualification.",
+  "run_id": 38807128022,
+  "source_head": "156a0eccc328c871bfedceafec8e25444ff38439",
+  "build_commit": "df73b574bf26fb7befd01a1b1881810b32255d35",
+  "source_blake3": "f0f9d5afe4df53ead9f9a71c3481519098aa393b3a4e03b3cd3fe840da65a37e",
+  "scope": "Private preview revision 1 from tested PR #4 artifacts; artifact and merged-main trees match. Rebuild reviewed main before public release. Linux GNU is diagnostic only. No model-inference qualification.",
   "targets": {
     "aarch64-apple-darwin": {
-      "artifact_id": 11915870390,
-      "artifact_name": "beta-homebrew-aarch64-apple-darwin-38604704711-1",
+      "artifact_id": 12007981747,
+      "artifact_name": "beta-homebrew-aarch64-apple-darwin-38807128022-1",
       "archive": "deepkit-code-aarch64-apple-darwin.tar.gz",
-      "bytes": 27565669,
-      "sha256": "2d34f9199657bfa958a40783001a16b372b26004e24d5a36a5f51b33b1824cde",
-      "binary_sha256": "00418561bd0858bc3e7e42046b31606bf452fceabeb3af438d9de066e41b92ca",
+      "bytes": 27579113,
+      "sha256": "9e7459a213a4970a4cd3d528f18224cb37fcafa4d23111a4b0284f74ac941840",
+      "binary_sha256": "b914a2de90376e77b93f7d56782704f7d5ae940104e24be99b2e141c8c2961de",
       "notice_bundle_sha256": "55164db5f1e49edb6478a16d976d6e3b08567f53ae8bfd699f81d53ff25b5221",
       "license_sha256": {
         "LICENSE.md": "95d0fbf2c9a4a8f1fcc67bb89a30ead7b7202bd06a1982fb249185385eac2109",
@@ -22,15 +22,15 @@
         "LICENSE-APACHE": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
         "THIRD_PARTY_NOTICES.md": "f720733762c8f6e01662843587ef60da670c16b8646d420009db3188ec6e43d7"
       },
-      "expires_at": "2026-11-13T17:25:32Z"
+      "expires_at": "2026-11-14T21:24:29Z"
     },
     "x86_64-unknown-linux-gnu": {
-      "artifact_id": 11915354712,
-      "artifact_name": "beta-homebrew-x86_64-unknown-linux-gnu-38604704711-1",
+      "artifact_id": 12008217369,
+      "artifact_name": "beta-homebrew-x86_64-unknown-linux-gnu-38807128022-1",
       "archive": "deepkit-code-x86_64-unknown-linux-gnu.tar.gz",
-      "bytes": 28959976,
-      "sha256": "23d86f245cd1f1e329f3b17daf8316eec275c01daf2ee0e15c8d1f49fd3ad682",
-      "binary_sha256": "3fb07ad66bc14794295af5d417cf74c2a229f6b05800355ad91eff1b06ee5016",
+      "bytes": 28967568,
+      "sha256": "d354782f5368a9ba2e7215d00a74b6bddaffcaa277b0f6d4c5d6a04952a15dad",
+      "binary_sha256": "dbb75c479130f08e4b066e19f491c52544d6f3559a2c2941a0006a919dd2f634",
       "notice_bundle_sha256": "55164db5f1e49edb6478a16d976d6e3b08567f53ae8bfd699f81d53ff25b5221",
       "license_sha256": {
         "LICENSE.md": "95d0fbf2c9a4a8f1fcc67bb89a30ead7b7202bd06a1982fb249185385eac2109",
@@ -38,7 +38,10 @@
         "LICENSE-APACHE": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
         "THIRD_PARTY_NOTICES.md": "f720733762c8f6e01662843587ef60da670c16b8646d420009db3188ec6e43d7"
       },
-      "expires_at": "2026-11-13T17:28:33Z"
+      "expires_at": "2026-11-14T21:32:50Z"
     }
-  }
+  },
+  "brew_revision": 1,
+  "merged_commit": "b4e7b289f0f94673987bd17d638bcc743071d099",
+  "source_tree": "7ebf819c0818e3fb829c990f662f6c80862c1c9b"
 }

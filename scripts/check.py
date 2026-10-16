@@ -12,6 +12,10 @@ spec.loader.exec_module(prepare)
 pins = prepare.manifest()
 formula = (ROOT / "Formula/dkc.rb").read_text()
 assert f'version "{pins["version"]}"' in formula, "formula version drifted"
+revision = pins.get("brew_revision", 0)
+assert type(revision) is int and revision >= 0, "invalid Homebrew revision"
+formula_revision = re.search(r"^\s*revision (\d+)\s*$", formula, re.MULTILINE)
+assert (int(formula_revision.group(1)) if formula_revision else 0) == revision, "formula revision drifted"
 assert 'HOMEBREW_CACHE/"dkc-private"/' in formula, "private cache root drifted"
 for entry in pins["targets"].values():
     assert f'sha256 "{entry["sha256"]}"' in formula, "formula checksum drifted"
