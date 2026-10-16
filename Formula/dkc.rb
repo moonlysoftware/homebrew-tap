@@ -7,6 +7,7 @@ class Dkc < Formula
   desc "Local hybrid code and document search for IDE agents"
   homepage "https://github.com/moonlysoftware/deepkit-code"
   version "0.1.0-beta.1"
+  revision 1
   license any_of: ["MIT", "Apache-2.0"]
 
   on_macos do
@@ -14,10 +15,10 @@ class Dkc < Formula
     depends_on macos: :ventura
     on_arm do
       archive = HOMEBREW_CACHE/"dkc-private"/
-                "2d34f9199657bfa958a40783001a16b372b26004e24d5a36a5f51b33b1824cde"/
+                "9e7459a213a4970a4cd3d528f18224cb37fcafa4d23111a4b0284f74ac941840"/
                 "deepkit-code-aarch64-apple-darwin.tar.gz"
       url "file://#{URI::DEFAULT_PARSER.escape(archive.to_s)}"
-      sha256 "2d34f9199657bfa958a40783001a16b372b26004e24d5a36a5f51b33b1824cde"
+      sha256 "9e7459a213a4970a4cd3d528f18224cb37fcafa4d23111a4b0284f74ac941840"
     end
   end
 
@@ -25,10 +26,10 @@ class Dkc < Formula
     depends_on arch: :x86_64
     on_intel do
       archive = HOMEBREW_CACHE/"dkc-private"/
-                "23d86f245cd1f1e329f3b17daf8316eec275c01daf2ee0e15c8d1f49fd3ad682"/
+                "d354782f5368a9ba2e7215d00a74b6bddaffcaa277b0f6d4c5d6a04952a15dad"/
                 "deepkit-code-x86_64-unknown-linux-gnu.tar.gz"
       url "file://#{URI::DEFAULT_PARSER.escape(archive.to_s)}"
-      sha256 "23d86f245cd1f1e329f3b17daf8316eec275c01daf2ee0e15c8d1f49fd3ad682"
+      sha256 "d354782f5368a9ba2e7215d00a74b6bddaffcaa277b0f6d4c5d6a04952a15dad"
     end
   end
 
