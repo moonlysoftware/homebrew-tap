@@ -4,16 +4,16 @@ This private tap lets invited testers install **Deepkit Code (`dkc`)**, a tool
 that indexes a repository and searches its code, documents and Git history.
 The current Homebrew preview is `0.1.0-beta.1_1` (revision 1). It includes
 project Codex setup and the concurrent-client startup fix from
-[Deepkit Code PR #4](https://github.com/moonlysoftware/deepkit-code/pull/4).
+[Deepkit Code PR #4](https://github.com/moonlysoftware/deepkit-code-history/pull/4).
 The binary still reports upstream version `0.1.0-beta.1`; Homebrew's revision
 and the pinned build commit distinguish this package from the earlier preview.
 
 It provides an Apple Silicon Mac build and an x86-64 GNU Linux build for
 diagnostic testing. The Mac artifact passed native Homebrew checks on macOS 14;
 installation still needs checking on a currently supported macOS version.
-These checks do not qualify model inference. This preview is built from a
-tested pull request whose source tree exactly matches merged `main`; it remains
-a private preview rather than a public release.
+These checks do not qualify model inference. This preview uses the tested PR #4
+build and its original merged source, preserved in `deepkit-code-history`.
+Current development continues in `deepkit-code`; this remains a private preview.
 
 [Recorded checks](docs/validation.md) include the actual private Linux install
 and the Ubuntu/macOS helper tests. The next native check is installation on an
@@ -23,7 +23,9 @@ invited Mac.
 
 You need Homebrew, Git, Python 3.11 or later, and the GitHub CLI (`gh`). Your
 GitHub account must have access to both private repositories:
-`moonlysoftware/homebrew-tap` and `moonlysoftware/deepkit-code`.
+`moonlysoftware/homebrew-tap` and `moonlysoftware/deepkit-code-history`.
+The verified Actions archives remain in the history repository after the source
+repository rename; access to the new `deepkit-code` alone is not sufficient.
 Configure GitHub SSH access for the tap and authenticate `gh` for the download:
 
 ```sh

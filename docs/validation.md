@@ -1,12 +1,25 @@
 # Private preview checks
 
+## Artifact origin — 21 October 2026
+
+The preview now retrieves the same pinned archives from
+`moonlysoftware/deepkit-code-history`, which retains the original source
+repository's Actions runs. Artifact IDs, build identity, hashes, expiration
+dates and Homebrew revision 1 are unchanged. Current source development lives
+in the fresh `moonlysoftware/deepkit-code` repository.
+
+All 25 offline helper tests, formula syntax and manifest/formula consistency
+checks passed for the origin update. These checks do not repeat native
+installation or upgrade qualification.
+
 ## Revision 1 — 16 October 2026
 
 This refresh pins the artifacts from
-[native run 38807128022](https://github.com/moonlysoftware/deepkit-code/actions/runs/38807128022),
+[native run 38807128022](https://github.com/moonlysoftware/deepkit-code-history/actions/runs/38807128022),
 which passed build, package, install, formula test, uninstall and reinstall on
 macOS ARM and the GNU Linux diagnostic. The build commit `df73b574` and merged
-main `b4e7b289` have the same Git tree. Full source CI passed on PR #4's head:
+main `b4e7b289` (now preserved in history) have the same Git tree. Full source CI
+passed on PR #4's head:
 1,416 tests passed and 17 were ignored in each Rust run.
 
 Both downloaded archives passed the private helper's archive, binary, build
@@ -32,7 +45,7 @@ Implementation tested: `d9d53b63c1d91f623d59e79cce9b4964eb0ae210`.
   test, license checks, uninstall, fresh install, reinstall, test and uninstall
   passed. The test package was removed afterward.
 
-The complete [receipt](https://github.com/moonlysoftware/deepkit-code/blob/prepare/beta-20261014/bench/results/beta-20261014/private-tap.json)
+The complete [receipt](https://github.com/moonlysoftware/deepkit-code-history/blob/prepare/beta-20261014/bench/results/beta-20261014/private-tap.json)
 records identities and individual commands/log hashes. The Linux test used a
 custom Homebrew prefix; it does not qualify a portable musl distribution.
 

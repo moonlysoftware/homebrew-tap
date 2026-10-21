@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "version": "0.1.0-beta.1",
-  "repository": "moonlysoftware/deepkit-code",
+  "repository": "moonlysoftware/deepkit-code-history",
   "run_id": 38807128022,
   "source_head": "156a0eccc328c871bfedceafec8e25444ff38439",
   "build_commit": "df73b574bf26fb7befd01a1b1881810b32255d35",
