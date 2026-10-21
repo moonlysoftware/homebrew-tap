@@ -9,15 +9,15 @@ The binary still reports upstream version `0.1.0-beta.1`; Homebrew's revision
 and the pinned build commit distinguish this package from the earlier preview.
 
 It provides an Apple Silicon Mac build and an x86-64 GNU Linux build for
-diagnostic testing. The Mac artifact passed native Homebrew checks on macOS 14;
-installation still needs checking on a currently supported macOS version.
+diagnostic testing. A private Mac installation and the revision-0-to-1 upgrade
+passed on macOS 26.3.1(a) with Homebrew 7.0.6. That host reported Xcode/Command
+Line Tools Tier 2 warnings, so this is not full platform qualification.
 These checks do not qualify model inference. This preview uses the tested PR #4
 build and its original merged source, preserved in `deepkit-code-history`.
 Current development continues in `deepkit-code`; this remains a private preview.
 
-[Recorded checks](docs/validation.md) include the actual private Linux install
-and the Ubuntu/macOS helper tests. The next native check is installation on an
-invited Mac.
+[Recorded checks](docs/validation.md) include the actual private Mac upgrade,
+Linux install and Ubuntu/macOS helper tests.
 
 ## Install
 
@@ -83,7 +83,7 @@ brew uninstall moonlysoftware/tap/dkc
 ```
 
 Both pinned archives passed native install and reinstall checks. The exact
-revision-0-to-1 upgrade has not been exercised; those install checks are not an
-upgrade result. See
+revision-0-to-1 upgrade also passed on an Apple Silicon Mac, with the toolchain
+limitations recorded above. See
 [maintaining the tap](docs/maintaining.md) for artifact identities, checks and
 the route to a public formula.

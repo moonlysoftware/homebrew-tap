@@ -1,5 +1,18 @@
 # Private preview checks
 
+## Private Mac upgrade — 21 October 2026
+
+On an Apple Silicon Mac running macOS 26.3.1(a) and Homebrew 7.0.6, installation
+of `0.1.0-beta.1` and `brew test` both exited 0. Upgrading that installed package
+to `0.1.0-beta.1_1` and running `brew test` again both exited 0. The installed
+binary's SHA-256 matches the existing revision 1 manifest pin, and the package
+is installed at `/opt/homebrew/Cellar/dkc/0.1.0-beta.1_1`.
+
+This exercised the distinct private revision-0-to-1 upgrade without building
+Rust or running models. Homebrew reported Xcode/Command Line Tools Tier 2
+warnings; the result does not establish full platform or model-inference
+qualification.
+
 ## Artifact origin — 21 October 2026
 
 The preview now retrieves the same pinned archives from
@@ -28,9 +41,10 @@ and manifest/formula consistency checks passed. The manifest records the new
 archive hashes and expiration dates; the formula uses revision 1 so the earlier
 preview remains a distinct Homebrew package.
 
-The exact private revision-0-to-1 upgrade remains untested. The native source
-workflow's install/reinstall tests are not evidence of that upgrade or of model
-inference. Local validation did not rebuild DKC or replace an installed package.
+The exact private revision-0-to-1 upgrade was subsequently checked on 21 October
+as recorded above. The native source workflow's install/reinstall tests alone
+do not establish that upgrade or model inference. The 16 October local
+validation did not rebuild DKC or replace an installed package.
 
 ## Original preview — 14 October 2026
 
@@ -55,3 +69,6 @@ an invited, currently supported Mac. macOS CI above runs helper/formula checks,
 not installation. No distinct-version upgrade or model inference is claimed.
 The source project's earlier intermittent watcher CI deadline miss is still
 open; these packaging checks do not resolve it. No public release is published.
+
+These were the limits of the original receipt. The actual Mac installation and
+distinct revision upgrade were subsequently checked on 21 October, above.
