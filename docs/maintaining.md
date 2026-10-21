@@ -34,10 +34,11 @@ The manifest's `version` continues to match the binary's embedded version;
 never relabel the artifact's actual build commit or version.
 
 These are tested PR artifacts with the same source tree as the original merge.
-They are not relabeled as a rebuild at the merge commit. The Mac Homebrew checks used
-macOS 14, which carries an older-platform qualification warning; test the private
-tap on a currently supported macOS version before making a broader Mac
-installation claim.
+They are not relabeled as a rebuild at the merge commit. The source workflow's
+Mac Homebrew checks used macOS 14, which carries an older-platform warning.
+The private revision-0-to-1 upgrade subsequently passed on macOS 26.3.1(a) with
+Homebrew 7.0.6. That host reported Xcode/Command Line Tools Tier 2 warnings, so
+the result does not establish full platform qualification.
 Linux GNU remains diagnostic. Neither platform's installation checks establish
 model-inference performance, and this tap offers no Intel Mac or Windows build.
 
