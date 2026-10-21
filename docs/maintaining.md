@@ -10,11 +10,11 @@ commits.
 [`preview.json`](../preview.json) is the record of the accepted artifact
 identities. The upstream version is `0.1.0-beta.1`, with Homebrew revision 1
 (`0.1.0-beta.1_1`), from
-[Actions run 38807128022](https://github.com/moonlysoftware/deepkit-code/actions/runs/38807128022):
+[Actions run 38807128022](https://github.com/moonlysoftware/deepkit-code-history/actions/runs/38807128022):
 
 - PR source head: `156a0eccc328c871bfedceafec8e25444ff38439`.
 - Artifact build commit: `df73b574bf26fb7befd01a1b1881810b32255d35`.
-- Merged main commit: `b4e7b289f0f94673987bd17d638bcc743071d099`.
+- Original merged main commit: `b4e7b289f0f94673987bd17d638bcc743071d099`.
 - Both commits have Git tree `7ebf819c0818e3fb829c990f662f6c80862c1c9b`.
 - Source BLAKE3: `f0f9d5afe4df53ead9f9a71c3481519098aa393b3a4e03b3cd3fe840da65a37e`.
 
@@ -33,8 +33,8 @@ the same upstream version must increment `brew_revision` in the manifest and
 The manifest's `version` continues to match the binary's embedded version;
 never relabel the artifact's actual build commit or version.
 
-These are tested PR artifacts with the same source tree as merged main. They
-are not relabeled as a rebuild at the merge commit. The Mac Homebrew checks used
+These are tested PR artifacts with the same source tree as the original merge.
+They are not relabeled as a rebuild at the merge commit. The Mac Homebrew checks used
 macOS 14, which carries an older-platform qualification warning; test the private
 tap on a currently supported macOS version before making a broader Mac
 installation claim.
@@ -45,8 +45,16 @@ model-inference performance, and this tap offers no Intel Mac or Windows build.
 
 Git fetches the private tap over SSH. The preparation helper separately uses
 the user's authenticated `gh` session to retrieve the pinned Actions artifact
-from `moonlysoftware/deepkit-code`. Access to one repository does not imply
-access to the other.
+from `moonlysoftware/deepkit-code-history`. Access to one repository does not imply
+access to the other. The history repository retains the original commits, PRs,
+Actions runs and artifacts; the fresh `moonlysoftware/deepkit-code` repository
+contains current development. Do not rely on the old repository-name redirect:
+that name now belongs to the fresh repository.
+
+Changing this artifact origin does not change archive bytes, build identity,
+checksums, expiration dates or Homebrew revision. The helper accepts only the
+reviewed history repository for this preview. A future preview built in the
+current source repository needs its own reviewed manifest and helper update.
 
 The helper validates the archive and its build, binary and license identities
 before seeding:

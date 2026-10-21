@@ -24,7 +24,7 @@ TARGETS = {
 def manifest() -> dict:
     """Read the reviewed artifact pins; paths and hashes must stay unambiguous."""
     value = json.loads((ROOT / "preview.json").read_text())
-    if value["schema"] != 1 or value["repository"] != "moonlysoftware/deepkit-code":
+    if value["schema"] != 1 or value["repository"] != "moonlysoftware/deepkit-code-history":
         raise ValueError("unsupported preview manifest")
     for target, entry in value["targets"].items():
         if target not in TARGETS.values():

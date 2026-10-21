@@ -55,7 +55,7 @@ class PreviewFixture(unittest.TestCase):
         }
         self.pins = {
             "schema": 1,
-            "repository": "moonlysoftware/deepkit-code",
+            "repository": "moonlysoftware/deepkit-code-history",
             "version": self.build["version"],
             "build_commit": self.build["build"]["commit"],
             "source_blake3": self.build["build"]["source_blake3"],
@@ -310,8 +310,8 @@ class AuthenticatedDownloadTests(PreviewFixture):
     def test_checks_exact_artifact_then_downloads_only_pinned_run_and_name(self):
         destination = self.root / "download"
         entry = self.pins["targets"][TARGET]
-        api_command = ["gh", "api", "repos/moonlysoftware/deepkit-code/actions/artifacts/789"]
-        download_command = ["gh", "run", "download", "123456", "--repo", "moonlysoftware/deepkit-code",
+        api_command = ["gh", "api", "repos/moonlysoftware/deepkit-code-history/actions/artifacts/789"]
+        download_command = ["gh", "run", "download", "123456", "--repo", "moonlysoftware/deepkit-code-history",
                             "--name", entry["artifact_name"], "--dir", str(destination)]
 
         def gh(command, **kwargs):
