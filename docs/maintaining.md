@@ -2,8 +2,10 @@
 
 **Public transition in preparation — 22 October 2026.** This draft branch
 prepares `0.1.0-beta.2` for Apple Silicon macOS 13 or later. The tap's `main`
-branch still serves the private preview. A verified native candidate archive,
-public release publication and anonymous installation checks remain pending.
+branch still serves the private preview. The candidate archive is verified and
+source CI, hosted native install/reinstall and the local preview-to-beta.2
+upgrade passed; see the [public candidate record](public-validation.md).
+Publication and anonymous installation checks remain pending.
 Publishing assets, creating a tag and changing tap visibility require owner
 approval of the prepared release. Keep credentials out of formulae, metadata,
 logs and commits.
@@ -42,7 +44,8 @@ being added to this public formula.
 
 ## Public release record
 
-The checker accepts a flat `release.json` record with these schema-1 fields:
+The checker accepts the flat [`release.json`](../release.json) record with these
+schema-1 fields:
 
 - `schema` is `1`; `distribution` is `github-release`.
 - `version` is the binary's actual release version; `release_tag` is that version
@@ -80,8 +83,8 @@ establishes a working public download, native installation or upgrade.
 Keep the terminal exit status and exact source, archive and tap revisions in
 the validation record. A failure remains recorded until understood and the
 relevant check rerun; a successful Linux diagnostic does not establish Mac
-behavior. [Historical validation](validation.md) remains separate from the
-public candidate's results.
+behavior. Record current results in [public validation](public-validation.md);
+[historical validation](validation.md) remains separate from those results.
 
 ## Historical private preview
 

@@ -64,9 +64,11 @@ compete for a port. If you already configured a global HTTP entry, follow the
 
 See [setup and usage](https://github.com/moonlysoftware/deepkit-code/blob/main/docs/usage.md)
 for models and configuration, [maintenance](docs/maintaining.md) for release
-verification, and [recorded checks](docs/validation.md) for the historical
-private preview. Those earlier checks do not qualify this public candidate;
-its archive, native installation and anonymous download checks remain pending.
+verification, and the [public candidate record](docs/public-validation.md) for
+the verified archive, passing source CI, hosted native install/reinstall checks
+and local preview-to-beta.2 upgrade. Publication and anonymous public
+installation remain pending. [Private-preview checks](docs/validation.md) remain
+separate historical evidence.
 
 The tap is licensed under [MIT OR Apache-2.0](LICENSE.md). Deepkit Code archives
 include the project's licenses and bundled dependency notices.
