@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   validate:
-    name: Formula and preview checks (${{ matrix.os }})
+    name: Formula and manifest checks (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
@@ -32,8 +32,8 @@ jobs:
         run: |
           ruby -c Formula/dkc.rb
           python3 scripts/check.py
-      - name: Test archive verification and private preparation
+      - name: Test release pins and archive verification
         run: python3 -m unittest discover -s tests -v
       - name: Record scope
         run: |
-          echo 'Offline formula/helper checks; private source artifacts require separate authenticated native installation.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Offline formula, manifest and helper checks. Native install/upgrade and anonymous public downloads require separate validation.' >> "$GITHUB_STEP_SUMMARY"
