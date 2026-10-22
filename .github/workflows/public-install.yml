@@ -18,7 +18,6 @@ jobs:
       HOMEBREW_GITHUB_API_TOKEN: ""
       HOMEBREW_NO_GITHUB_API: "1"
       HOMEBREW_CURLRC: /dev/null
-      HOMEBREW_CACHE: ${{ runner.temp }}/dkc-public-homebrew-cache
       GH_TOKEN: ""
       GITHUB_TOKEN: ""
       HOMEBREW_NO_ANALYTICS: "1"
@@ -40,6 +39,7 @@ jobs:
 
       - name: Check the native host and release pins
         run: |
+          echo "HOMEBREW_CACHE=$RUNNER_TEMP/dkc-public-homebrew-cache" >> "$GITHUB_ENV"
           test "$(uname -m)" = arm64
           command -v brew
           test ! -d "$(brew --cellar)/dkc"
