@@ -1,0 +1,102 @@
+name: Public Homebrew install
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-install:
+    name: Anonymous install (Apple Silicon)
+    runs-on: macos-15
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
+    env:
+      HOMEBREW_GITHUB_API_TOKEN: ""
+      HOMEBREW_NO_GITHUB_API: "1"
+      HOMEBREW_CURLRC: /dev/null
+      HOMEBREW_CACHE: ${{ runner.temp }}/dkc-public-homebrew-cache
+      GH_TOKEN: ""
+      GITHUB_TOKEN: ""
+      HOMEBREW_NO_ANALYTICS: "1"
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+      HOMEBREW_NO_INSTALL_CLEANUP: "1"
+      HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: "1"
+      GIT_TERMINAL_PROMPT: "0"
+
+    steps:
+      - name: Check out the reviewed pins
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Set up verification Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+
+      - name: Check the native host and release pins
+        run: |
+          test "$(uname -m)" = arm64
+          command -v brew
+          test ! -d "$(brew --cellar)/dkc"
+          brew config
+          python3 scripts/check.py
+
+      - name: Install and test through the public tap
+        env:
+          GIT_CONFIG_NOSYSTEM: "1"
+          GIT_CONFIG_GLOBAL: /dev/null
+          GIT_CONFIG_COUNT: "1"
+          GIT_CONFIG_KEY_0: credential.helper
+          GIT_CONFIG_VALUE_0: ""
+        run: |
+          brew install moonlysoftware/tap/dkc
+          dkc_tap="$(brew --repository moonlysoftware/tap)"
+          cmp Formula/dkc.rb "$dkc_tap/Formula/dkc.rb"
+          cmp release.json "$dkc_tap/release.json"
+          brew test moonlysoftware/tap/dkc
+
+      - name: Verify installed version, binary and license identities
+        run: |
+          dkc_prefix="$(brew --prefix moonlysoftware/tap/dkc)"
+          python3 - "$dkc_prefix" <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import subprocess
+          import sys
+
+          pins = json.loads(Path("release.json").read_text())
+          prefix = Path(sys.argv[1])
+          binary = prefix / "bin/dkc"
+          version = subprocess.check_output([str(binary), "--version"], text=True, timeout=10).strip()
+          if version != f"dkc {pins['version']}":
+              raise SystemExit(f"Installed version differs from release pins: {version}")
+          files = {
+              binary: pins["binary_sha256"],
+              prefix / "share/dkc/third-party-licenses.tar.gz": pins["notice_bundle_sha256"],
+          }
+          for name, expected in pins["license_sha256"].items():
+              directory = prefix / "share/dkc" if name == "THIRD_PARTY_NOTICES.md" else prefix
+              files[directory / name] = expected
+          for path, expected in files.items():
+              with path.open("rb") as stream:
+                  actual = hashlib.file_digest(stream, "sha256").hexdigest()
+              if actual != expected:
+                  raise SystemExit(f"Installed file differs from release pins: {path.name}")
+          print(f"{version}: installed binary, notice bundle and four license files match release.json.")
+          with Path(os.environ["GITHUB_STEP_SUMMARY"]).open("a") as summary:
+              summary.write(
+                  f"Public Homebrew install and formula test passed for {version}.\n\n"
+                  f"Archive SHA-256: `{pins['sha256']}`.\n\n"
+                  "The fresh ARM runner used the public tap and release URL without GitHub "
+                  "download credentials. Installed identities matched release.json. "
+                  "The test exercises local level-1 indexing and lexical search; no models "
+                  "or inference qualification.\n"
+              )
+          PY
