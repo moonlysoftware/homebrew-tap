@@ -1,89 +1,74 @@
 # Moonly Software Homebrew tap
 
-This private tap lets invited testers install **Deepkit Code (`dkc`)**, a tool
-that indexes a repository and searches its code, documents and Git history.
-The current Homebrew preview is `0.1.0-beta.1_1` (revision 1). It includes
-project Codex setup and the concurrent-client startup fix from
-[Deepkit Code PR #4](https://github.com/moonlysoftware/deepkit-code-history/pull/4).
-The binary still reports upstream version `0.1.0-beta.1`; Homebrew's revision
-and the pinned build commit distinguish this package from the earlier preview.
+> **Preparation only — public installation is not available yet.** This draft
+> branch prepares `0.1.0-beta.2` for Apple Silicon. Release publication and tap
+> visibility are pending; `main` still serves the private `0.1.0-beta.1_1` preview.
+> The commands below apply after publication. Invited testers can use the
+> [existing private-preview instructions](docs/maintaining.md#private-installation-and-updates).
 
-It provides an Apple Silicon Mac build and an x86-64 GNU Linux build for
-diagnostic testing. A private Mac installation and the revision-0-to-1 upgrade
-passed on macOS 26.3.1(a) with Homebrew 7.0.6. That host reported Xcode/Command
-Line Tools Tier 2 warnings, so this is not full platform qualification.
-These checks do not qualify model inference. This preview uses the tested PR #4
-build and its original merged source, preserved in `deepkit-code-history`.
-Current development continues in `deepkit-code`; this remains a private preview.
+Install **[Deepkit Code (`dkc`)](https://github.com/moonlysoftware/deepkit-code)**
+to search a repository's code, documents and Git history from the CLI or an MCP
+client. The first public package is planned for **Apple Silicon Macs running
+macOS 13 Ventura or later**. Intel Mac, Linux and Windows packages are outside
+this public tap candidate.
 
-[Recorded checks](docs/validation.md) include the actual private Mac upgrade,
-Linux install and Ubuntu/macOS helper tests.
+## Install after publication
 
-## Install
-
-You need Homebrew, Git, Python 3.11 or later, and the GitHub CLI (`gh`). Your
-GitHub account must have access to both private repositories:
-`moonlysoftware/homebrew-tap` and `moonlysoftware/deepkit-code-history`.
-The verified Actions archives remain in the history repository after the source
-repository rename; access to the new `deepkit-code` alone is not sufficient.
-Configure GitHub SSH access for the tap and authenticate `gh` for the download:
+With Homebrew installed:
 
 ```sh
-gh auth login
-brew tap moonlysoftware/tap git@github.com:moonlysoftware/homebrew-tap.git
-python3 "$(brew --repository moonlysoftware/tap)/scripts/prepare-private.py"
-brew install --formula moonlysoftware/tap/dkc
+brew install moonlysoftware/tap/dkc
 brew test moonlysoftware/tap/dkc
 dkc --version
 ```
 
-The preparation step downloads the exact pinned Actions artifact, verifies its
-archive, build identity, binary and license files, then places it in Homebrew's
-cache. The formula installs from that local file; it contains no credentials.
-The pinned Actions artifacts expire on **14 November 2026**. This is temporary
-private distribution, with no public release date promised.
+The public formula will download the exact checksum-pinned GitHub release
+archive. It will not require GitHub authentication, Python or the private
+preparation helper. Models are downloaded separately; the formula test uses
+local lexical search without a model download or API key.
 
-If you already downloaded the exact archive through authenticated GitHub access:
+## Upgrade, reinstall or remove
 
-```sh
-python3 "$(brew --repository moonlysoftware/tap)/scripts/prepare-private.py" \
-  --archive /path/to/deepkit-code-aarch64-apple-darwin.tar.gz
-```
-
-Use the corresponding Linux archive on Linux. The same verification applies.
-
-## Update, reinstall or remove
-
-To update an installed earlier preview, fetch the new tap and prepare its archive
-before asking Homebrew to upgrade:
+After publication, upgrade an earlier installation, including the private
+`0.1.0-beta.1_1` preview, with:
 
 ```sh
 brew update
-python3 "$(brew --repository moonlysoftware/tap)/scripts/prepare-private.py"
-brew upgrade --formula moonlysoftware/tap/dkc
+brew upgrade moonlysoftware/tap/dkc
 brew test moonlysoftware/tap/dkc
 ```
 
-Then run `dkc init --codex` inside each project to create its stdio configuration.
-If Codex already has a global `deepkit-code` HTTP entry, follow the
-[configuration migration instructions](https://github.com/moonlysoftware/deepkit-code/blob/main/docs/usage.md#connect-an-mcp-client)
-before using the project entry.
-
-Run the preparation step again if Homebrew's cache has been cleared, then:
+To reinstall the same package, run:
 
 ```sh
-brew reinstall --formula moonlysoftware/tap/dkc
+brew reinstall moonlysoftware/tap/dkc
 brew test moonlysoftware/tap/dkc
 ```
 
-To remove the installed program:
+Remove it with `brew uninstall moonlysoftware/tap/dkc`.
+
+## Connect your project
+
+Inside each Git repository, run:
 
 ```sh
-brew uninstall moonlysoftware/tap/dkc
+dkc init --profile local --yes --codex
+dkc index --level 1
+dkc search "retry policy" --mode lexical --no-rerank
 ```
 
-Both pinned archives passed native install and reinstall checks. The exact
-revision-0-to-1 upgrade also passed on an Apple Silicon Mac, with the toolchain
-limitations recorded above. See
-[maintaining the tap](docs/maintaining.md) for artifact identities, checks and
-the route to a public formula.
+Use `--cursor` or `--claude` instead of `--codex` for those clients, or omit the
+flag for CLI use. Generated MCP configurations use stdio, so projects do not
+compete for a port. If you already configured a global HTTP entry, follow the
+[configuration migration instructions](https://github.com/moonlysoftware/deepkit-code/blob/main/docs/usage.md#connect-an-mcp-client).
+
+See [setup and usage](https://github.com/moonlysoftware/deepkit-code/blob/main/docs/usage.md)
+for models and configuration, [maintenance](docs/maintaining.md) for release
+verification, and the [public candidate record](docs/public-validation.md) for
+the verified archive, passing source CI, hosted native install/reinstall checks
+and local preview-to-beta.2 upgrade. Publication and anonymous public
+installation remain pending. [Private-preview checks](docs/validation.md) remain
+separate historical evidence.
+
+The tap is licensed under [MIT OR Apache-2.0](LICENSE.md). Deepkit Code archives
+include the project's licenses and bundled dependency notices.
