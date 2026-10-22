@@ -1,14 +1,11 @@
 # Maintaining the tap
 
-**Public transition in preparation — 22 October 2026.** This draft branch
-prepares `0.1.0-beta.2` for Apple Silicon macOS 13 or later. The tap's `main`
-branch still serves the private preview. The candidate archive is verified and
-source CI, hosted native install/reinstall and the local preview-to-beta.2
-upgrade passed; see the [public candidate record](public-validation.md).
-Publication and anonymous installation checks remain pending.
-Publishing assets, creating a tag and changing tap visibility require owner
-approval of the prepared release. Keep credentials out of formulae, metadata,
-logs and commits.
+**Public beta published — 22 October 2026.** The owner approved publication of
+`0.1.0-beta.2` for Apple Silicon macOS 13 or later. This tap and the release
+downloads are public; the source history repository remains private. See the
+[validation record](public-validation.md) for exact package identities and checks.
+Future releases and visibility changes still require owner authorization.
+Keep credentials out of formulae, metadata, logs and commits.
 
 ## Prepare the public formula
 
@@ -33,7 +30,7 @@ logs and commits.
 5. Present the complete source, archive, formula and validation record for
    owner review. After authorized publication, verify the public tap and exact
    asset download without credentials, then repeat the documented install
-   path. Remove the README's preparation banner only when that path works.
+   path before advertising it.
 
 Public installation must not depend on private repository access, authenticated
 URLs, Actions artifact retention, local `file://` cache entries or
@@ -90,7 +87,8 @@ behavior. Record current results in [public validation](public-validation.md);
 
 The following record preserves the existing preview's delivery mechanism,
 artifact identities, completed checks and earlier transition requirements.
-It is not qualification of the public `0.1.0-beta.2` candidate.
+It is not qualification of the public `0.1.0-beta.2` package. Current installation
+uses the public formula in [the README](../README.md).
 
 ### Pinned private-preview artifacts
 
@@ -131,9 +129,9 @@ model-inference performance, and this tap offers no Intel Mac or Windows build.
 
 ### Private installation and updates
 
-These instructions describe the `main` branch's private `0.1.0-beta.1_1`
-preview and remain available for invited testers while the public candidate is
-prepared. It includes project Codex setup and concurrent-client startup fixes
+These archived instructions describe tap commit `2399183` and its private
+`0.1.0-beta.1_1` preview. They do not apply to current `main`. The preview
+included project Codex setup and concurrent-client startup fixes
 from [Deepkit Code PR #4](https://github.com/moonlysoftware/deepkit-code-history/pull/4).
 The binary reports upstream version `0.1.0-beta.1`; the Homebrew revision and
 build identity distinguish it from the earlier preview.

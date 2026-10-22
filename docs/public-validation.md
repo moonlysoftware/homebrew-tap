@@ -1,17 +1,18 @@
-# Public beta candidate validation — 22 October 2026
+# Public beta validation — 22 October 2026
 
-**Prepared, not published.** The Apple Silicon `0.1.0-beta.2` archive is verified
+**Published and tested.** The Apple Silicon `0.1.0-beta.2` archive is verified
 and pinned in [`release.json`](../release.json) and [the formula](../Formula/dkc.rb).
-The release asset and tag are not published, and the tap remains private.
-Source CI, hosted native install/reinstall and the local preview-to-beta.2
-upgrade passed. Anonymous public installation remains pending.
+The [prerelease](https://github.com/moonlysoftware/deepkit-code/releases/tag/v0.1.0-beta.2)
+and tap are public with owner authorization; the history repository stays private.
+Source CI, hosted native packaging, local preview-to-beta.2 upgrade, anonymous
+public reinstall and a fresh hosted public install all passed.
 [Private-preview results](validation.md) are separate historical evidence.
 
 ## Exact candidate
 
 | Identity | Value |
 | --- | --- |
-| Upstream version / intended release tag | `0.1.0-beta.2` / `v0.1.0-beta.2` |
+| Upstream version / release tag | `0.1.0-beta.2` / `v0.1.0-beta.2` |
 | Reviewed source commit | `f9abf48625e012c572b22fdcc13514acea70dfb2` |
 | Source BLAKE3 | `5a9b1ff78a29629ec4ab09d428ca260e94015eb447571e7126f50ded42fcd8eb` |
 | Public target | `aarch64-apple-darwin` |
@@ -38,6 +39,8 @@ release helper and explicitly selects only Apple Silicon macOS 13 or later.
 | Exact-commit native packaging and Homebrew lifecycle | [Run 39768490488](https://github.com/moonlysoftware/deepkit-code/actions/runs/39768490488) passed on macOS ARM and the Linux GNU diagnostic. The selected ARM job used macOS 15.7.9 and a macOS 13 deployment target. |
 | PR native packaging and Homebrew lifecycle | [Run 39768457278](https://github.com/moonlysoftware/deepkit-code/actions/runs/39768457278) also passed both jobs for the candidate. This is separate supporting evidence; the pinned archive is from the exact-commit run above. |
 | Local preview-to-beta.2 upgrade | Upgrade from `0.1.0-beta.1_1` to the pinned `0.1.0-beta.2` archive and the following formula test passed on Apple Silicon; [details and limits](#local-upgrade) below. |
+| Anonymous public reinstall | Fresh-cache public download, reinstall, formula test and installed-file identity checks passed locally at 17:06:11–17:06:21 UTC; [details](#public-installation) below. |
+| Fresh public install | [Run 39819875391](https://github.com/moonlysoftware/homebrew-tap/actions/runs/39819875391) passed the documented public install, formula test and installed-file identity checks on a fresh Apple Silicon runner. |
 | Tap manifest and generated formula | `python3 scripts/check.py` passed against the real release pins and canonical public URL. |
 | Offline tap regression suite | `python3 -m unittest discover -s tests -v`: 41 passed, including 16 public pin cases and 25 historical private-helper cases. |
 | Formula syntax and patch formatting | `ruby -c Formula/dkc.rb` and `git diff --check` passed. |
@@ -70,11 +73,40 @@ bytes and mode. The earlier `0.1.0-beta.1` and `0.1.0-beta.1_1` keg binary hashe
 remained unchanged. The new beta.2 installation is retained. The local receipt
 records both command exit statuses, installed hashes and restoration checks.
 
-## Pending checks and publication
+## Public installation
 
-- Owner approval for release/tag publication and public tap visibility.
-- Anonymous fetch of the published tap and exact release archive, then the
-  documented public install path and formula test.
+Source PR #1 merged as `eb1cd7773722417b861d8217af1fcc51804f1a5e`, with the
+same tree as the tested `f9abf486` build. The tag points to that exact build
+commit. The prerelease published at 17:04:30 UTC with only the qualified ARM
+archive and checksum sidecar. The generated Release workflow was temporarily
+disabled for the manual tag publication and restored active afterward.
+Tap PR #4 merged as `df1a1ebb34dc24424c30be440a377feb83c469df`; the owner then
+made this tap public. The history repository remained private.
 
-Retain the preparation banner until the public path passes. See
-[maintenance](maintaining.md) for the verification and publication sequence.
+The local public check verified anonymous HTTPS access to tap main
+`4cc6af07f89d71946d1b3ba34ae2569abfbd5b26` and downloaded the exact archive
+without credentials (HTTP 200, 28,129,829 bytes). It then ran
+`brew reinstall moonlysoftware/tap/dkc` with an empty cache, followed by
+`brew test moonlysoftware/tap/dkc`. All commands exited successfully and all
+installed binary, notice and license hashes matched the manifest. The tap was
+unchanged during testing and both earlier keg binary hashes were preserved.
+GitHub API authentication, curl configuration, automatic updates, cleanup and
+dependent checks were disabled for this bounded test. The local host and
+toolchain limitations are the same as the upgrade above.
+
+The manual [public-install workflow](../.github/workflows/public-install.yml)
+then passed at `a869bd24289300902cf891dbee050a399890e81a` on a fresh macOS 15.7.9
+ARM runner with Homebrew 6.0.22. No DKC keg existed before installation.
+It ran `brew install moonlysoftware/tap/dkc` through the public tap and release,
+with an isolated cache and GitHub download credentials disabled, followed by
+the formula test. The fetched formula and manifest matched the reviewed
+checkout; installed version, binary, notice bundle and all four license files
+matched `release.json`. This verifies the public installation path without
+models or inference qualification.
+
+The initial smoke workflow at `4cc6af0` failed GitHub's workflow validation
+before any job started: `runner.temp` is unavailable in job-level environment
+configuration. Commit `a869bd2` sets the cache through `GITHUB_ENV` after the
+runner starts. The passing run above uses that correction; the earlier
+[failed validation](https://github.com/moonlysoftware/homebrew-tap/actions/runs/39819645983)
+is retained as a harness failure, not an installation result.

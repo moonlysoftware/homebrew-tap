@@ -1,18 +1,12 @@
 # Moonly Software Homebrew tap
 
-> **Preparation only — public installation is not available yet.** This draft
-> branch prepares `0.1.0-beta.2` for Apple Silicon. Release publication and tap
-> visibility are pending; `main` still serves the private `0.1.0-beta.1_1` preview.
-> The commands below apply after publication. Invited testers can use the
-> [existing private-preview instructions](docs/maintaining.md#private-installation-and-updates).
-
 Install **[Deepkit Code (`dkc`)](https://github.com/moonlysoftware/deepkit-code)**
 to search a repository's code, documents and Git history from the CLI or an MCP
-client. The first public package is planned for **Apple Silicon Macs running
+client. The public beta supports **Apple Silicon Macs running
 macOS 13 Ventura or later**. Intel Mac, Linux and Windows packages are outside
-this public tap candidate.
+this public tap.
 
-## Install after publication
+## Install
 
 With Homebrew installed:
 
@@ -22,14 +16,13 @@ brew test moonlysoftware/tap/dkc
 dkc --version
 ```
 
-The public formula will download the exact checksum-pinned GitHub release
-archive. It will not require GitHub authentication, Python or the private
-preparation helper. Models are downloaded separately; the formula test uses
+The formula downloads a checksum-pinned GitHub release archive. No GitHub
+authentication or preparation helper is needed. Models are downloaded separately; the formula test uses
 local lexical search without a model download or API key.
 
 ## Upgrade, reinstall or remove
 
-After publication, upgrade an earlier installation, including the private
+Upgrade an earlier installation, including the private
 `0.1.0-beta.1_1` preview, with:
 
 ```sh
@@ -64,11 +57,9 @@ compete for a port. If you already configured a global HTTP entry, follow the
 
 See [setup and usage](https://github.com/moonlysoftware/deepkit-code/blob/main/docs/usage.md)
 for models and configuration, [maintenance](docs/maintaining.md) for release
-verification, and the [public candidate record](docs/public-validation.md) for
-the verified archive, passing source CI, hosted native install/reinstall checks
-and local preview-to-beta.2 upgrade. Publication and anonymous public
-installation remain pending. [Private-preview checks](docs/validation.md) remain
-separate historical evidence.
+verification, and the [validation record](docs/public-validation.md) for
+package identities and installation checks. [Private-preview checks](docs/validation.md)
+remain separate historical evidence.
 
 The tap is licensed under [MIT OR Apache-2.0](LICENSE.md). Deepkit Code archives
 include the project's licenses and bundled dependency notices.
